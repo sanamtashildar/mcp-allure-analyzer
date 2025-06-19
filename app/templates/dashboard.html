@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MCP Test Failure Reports</title>
+  <style>
+    body { font-family: Arial; padding: 2rem; background: #f0f0f0; }
+    table { background: white; border-collapse: collapse; width: 100%; }
+    th, td { padding: 0.75rem; border: 1px solid #ccc; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+  <h1>Test Failure Reports</h1>
+  <div id="app">Loading...</div>
+
+  <script>
+    fetch("/reports").then(res => res.json()).then(data => {
+      let html = "<table><tr><th>Test</th><th>Message</th><th>Reason</th><th>Time</th></tr>";
+      data.forEach(d => {
+        html += `<tr><td>${d.name}</td><td>${d.message}</td><td>${d.reason}</td><td>${d.timestamp}</td></tr>`;
+      });
+      html += "</table>";
+      document.getElementById("app").innerHTML = html;
+    }).catch(err => {
+      document.getElementById("app").innerText = "Failed to load reports";
+    });
+  </script>
+</body>
+</html>

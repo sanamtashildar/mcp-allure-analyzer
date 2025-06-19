@@ -1,3 +1,4 @@
+
 import os
 import sqlite3
 
@@ -17,3 +18,8 @@ CREATE TABLE IF NOT EXISTS failures (
 def save_failure(name, message, reason):
     cursor.execute("INSERT INTO failures (name, message, reason) VALUES (?, ?, ?)", (name, message, reason))
     conn.commit()
+
+def fetch_failures():
+    cursor.execute("SELECT name, message, reason, timestamp FROM failures ORDER BY timestamp DESC")
+    rows = cursor.fetchall()
+    return [{"name": r[0], "message": r[1], "reason": r[2], "timestamp": r[3]} for r in rows]
