@@ -10,6 +10,8 @@ Test: {failure['name']}
 Error: {failure['message']}
 Give a short explanation."""
 
+    print(f"Sending prompt to OpenAI: {prompt}")  # Log the prompt
+
     response = client.chat.completions.create(
         model="gpt-4o",  # or gpt-3.5-turbo
         messages=[{"role": "user", "content": prompt}],
@@ -17,4 +19,6 @@ Give a short explanation."""
     )
 
     reason = response.choices[0].message.content
+    print(f"Received reason from OpenAI: {reason}")  # Log the response
+
     return {"test": failure["name"], "reason": reason}
